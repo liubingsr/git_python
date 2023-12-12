@@ -11,8 +11,6 @@ E_lps = np.zeros(month)
 E_battery = np.zeros(month)
 E_capacitance = np.zeros(month)
 
-
-
 Coef_converter = 0.95
 alpha = 0.7
 beta = 0.65
@@ -72,8 +70,6 @@ def function(x, y):
 
     f_lpsp = 0
 
-
-
     #print(E_battery_min/x, E_battery_n/x)
     #print(E_battery_min, E_battery_n)
     #input()
@@ -118,7 +114,7 @@ def function(x, y):
     if f_lpsp > f_lpsp_max:
        LCC = float('inf')
     else:
-       LCC = 1.0*((1 + f_ob + f_mb + f_db)*x*p_battery + (1 + f_oc + f_mc + f_dc)*y*p_capacitance) 
+       LCC = 1.0*((1 + f_ob + f_mb + f_db)*x*p_battery + (1 + f_oc + f_mc + f_dc)*y*p_capacitance)
     
     #print(x, y, f_lpsp, LCC)
     #input()
@@ -211,6 +207,6 @@ def main():
     print('result coordinate:', pso.x_global_best, '\t', pso.y_global_best,'\t',pso.f_global_best)
 
     #print(E_battery)
-
+    
 if __name__ == '__main__':
     main()

@@ -1,40 +1,66 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import time
-import math
 
 def function(x, y):
-    #m = 30
-    #if x < m and y < m:
-    #    return 30*x - y
-    #elif x < m <= y:
-    #    return 30*y - x
-    #elif x >= m > y:
-    #    return x**2 - y/2
-    #elif x >= m and y >= m:
-    #    return 20*(y**2) - 500*x
+    m = 30
+    if x < m and y < m:
+        return 30*x - y
+    elif x < m <= y:
+        return 30*y - x
+    elif x >= m > y:
+        return x**2 - y/2
+    elif x >= m and y >= m:
+        return 20*(y**2) - 500*x
 
-    return -1.0*(x**2 + y**2 - 10*math.cos(2*math.pi*x) - 10*math.cos(2*math.pi*y) + 20)
-    #return x**2 + y**2
-
-x_min = -5
-x_max = 5
-y_min = -5
-y_max = 5
+x_min = 0
+x_max = 60
+y_min = 0
+y_max = 60
 
 #速度上下限必须互为相反数，保证方向的随机性
 v_min = -1
 v_max = 1
-
 #c2越大越容易收敛
 w = 0.4
-c1 = 0.4
-c2 = 6
+c1 = 0.2
+c2 = 3
 
-t = np.arange(x_min,x_max,0.1)
+t = np.arange(x_min,x_max,0.5)
+import numpy as np
+import matplotlib.pyplot as plt
+import time
+
+def function(x, y):
+    m = 30
+    if x < m and y < m:
+        return 30*x - y
+    elif x < m <= y:
+        return 30*y - x
+    elif x >= m > y:
+        return x**2 - y/2
+    elif x >= m and y >= m:
+        return 20*(y**2) - 500*x
+
+x_min = 0
+x_max = 60
+y_min = 0
+y_max = 60
+
+#速度上下限必须互为相反数，保证方向的随机性
+v_min = -1
+v_max = 1
+#c2越大越容易收敛
+w = 0.4
+c1 = 0.2
+c2 = 3
+
+t = np.arange(x_min,x_max,0.5)
+#print(t)
+#print(len(t))
 X, Y = np.meshgrid(t, t)    #需要弄明白
+#print(X, Y)
 Z = np.zeros(shape = X.shape)    #需要弄明白
-
 for i in range(len(t)):
     for j in range(len(t)):
         Z[i][j] = function(X[i][j], Y[i][j])
@@ -61,8 +87,8 @@ class PSO:
         self.particles = [Particle() for _ in range(size)]      #需要弄明白
 
         #记录全局最优点和最优值
-        self.x_global_best = 0
-        self.y_global_best = 0
+        self.x_global_best = 20
+        self.y_global_best = 20
         self.f_global_best = function(self.x_global_best, self.y_global_best)
 
         #迭代次数
@@ -111,8 +137,8 @@ class PSO:
             self.f_global_best_records.append(self.f_global_best)
 
 def main():
-    iter_num = 1000
-    size = 300
+    iter_num = 100
+    size = 30
     pso = PSO(iter_num, size)
     fig = plt.figure(figsize = (8, 6))
     ax = fig.add_subplot(111, projection = '3d')
@@ -123,8 +149,6 @@ def main():
         plt.ion()
         plt.pause(0.1)
         plt.ioff()
-        print(pso.f_global_best)
-
     print('result coordinate:', pso.x_global_best, ' ', pso.y_global_best,' ',pso.f_global_best)
     plt.show
     plt.plot(range(len(pso.f_global_best_records)), pso.f_global_best_records, alpha = 1)
